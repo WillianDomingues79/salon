@@ -129,7 +129,7 @@ main{
   position: relative;
 }
 
-#home .image::before {
+#home .image::before { /*Before cria um novo objeto dentro do mesmo objeto*/
   content: '';
   height: 100%;
   width: 100%;
