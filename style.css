@@ -14,6 +14,10 @@ img {
   height: auto;
 }
 
+ul{
+  list-style: none;
+}
+
 /*============ VARIABLES =============*/
 :root {
   --header-height:4.5rem;
@@ -36,7 +40,7 @@ body {
   -webkit-font-smoothing:antialiased; /*Deixa a fonte mais clara*/
 }
 
-h1 {
+.title {
   font: 700 1.875rem 'Poppins', sans-serif;
   color: var(--title-color);
   -webkit-font-smoothing:auto;
@@ -63,38 +67,12 @@ h1 {
   background: linear-gradient(270deg,hsla(var(--hue), 36%, 57%, 1) 0%, hsla(var(--hue), 65%, 88%, 0.34) 100%);
 }
 
-/*============ LAYOUT =============*/
-#header {
-  /*Usar o REM para se adapatar as proporções da pagina, se usar o PX ela vai ficar sempre naquele tamanho*/
-  border-bottom: 1px solid #e4e4e4;
-  margin-bottom: 2rem;
-  display: flex;
-  width: 100%;
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 100;
-  background-color: var(--body-color);
-}
-
-nav{
-  height: var(--header-height);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
-}
-
-nav a{
-  display: flex;
-}
-
 .logo span{
   color: var(--base-color)
 }
 
 main{
-  margin-top: var(--header-height);
+  margin-top: calc(var(--header-height) + 2rem);/*Função de calcular 32px a mais no espaço*/
 }
 
 .logo{
@@ -115,6 +93,69 @@ main{
 .section {
   padding: 5rem 0;
 }
+
+/*============ LAYOUT =============*/
+#header {
+  /*Usar o REM para se adapatar as proporções da pagina, se usar o PX ela vai ficar sempre naquele tamanho*/
+  border-bottom: 1px solid #e4e4e4;
+  margin-bottom: 2rem;
+  display: flex;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  background-color: var(--body-color);
+}
+
+/*============ NAV =============*/
+
+nav{
+  height: var(--header-height);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+nav ul.grid{
+  gap: 4rem;
+}
+
+nav ul li{
+  text-align: center;
+}
+
+nav .menu{
+  opacity: 0;
+  visibility: hidden;
+}
+
+nav.show .menu{
+  opacity: 1;
+  visibility: visible;
+  background: var(--body-color);
+  height: 100vh;
+  width: 100vw;
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+
+nav.show .menu{
+  display: grid;
+  place-content: center;/*Joga os objetos no centro da tela*/
+}
+
+nav.show ul.grid{
+  gap: 4rem;
+}
+
+/*nav a{
+  display: flex;
+}*/
+
+
 
 /*============ HOME =============*/
 #home{
