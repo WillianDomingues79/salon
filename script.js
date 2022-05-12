@@ -17,17 +17,17 @@ for (const link of links) {
   })
 }
 
-//Mudar sombra do menu ao dar o Scroll na pagina
-const header = document.querySelector('#header')
-const navHeight = header.offsetHeight
+//Mudar sombra bottom do menu fixo ao dar o Scroll na pagina **Estético
+function changeHeaderWhenScroll() {
+  const header = document.querySelector('#header')
+  const navHeight = header.offsetHeight
 
-window.addEventListener('scroll', function () {
   if (this.window.scrollY >= navHeight) {
     header.classList.add('scroll')
   } else {
     header.classList.remove('scroll')
   }
-})
+}
 
 //Swiper Carrousel
 const swiper = new Swiper('.swiper', {
@@ -60,3 +60,20 @@ scrollReveal.reveal(
 
   { interval: 100 }
 )
+
+/*Button Back to top */
+function backToTop() {
+  const backToTopButton = document.querySelector('.back-to-top') //Pega o seletor do botão de subir
+
+  if (this.window.scrollY >= 400) {
+    backToTopButton.classList.add('show')
+  } else {
+    backToTopButton.classList.remove('show')
+  }
+}
+
+/*Cria uma função para sempre que usar o Scroll da pagina já chamar a função acima*/
+window.addEventListener('scroll', function () {
+  changeHeaderWhenScroll()
+  backToTop()
+})
