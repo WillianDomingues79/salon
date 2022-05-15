@@ -18,10 +18,9 @@ for (const link of links) {
 }
 
 //Mudar sombra bottom do menu fixo ao dar o Scroll na pagina **Estético
+const header = document.querySelector('#header')
+const navHeight = header.offsetHeight
 function changeHeaderWhenScroll() {
-  const header = document.querySelector('#header')
-  const navHeight = header.offsetHeight
-
   if (this.window.scrollY >= navHeight) {
     header.classList.add('scroll')
   } else {
@@ -40,13 +39,20 @@ const swiper = new Swiper('.swiper', {
     delay: 3000
   },
   mousewheel: true,
-  keyboard: true
+  keyboard: true,
+  /*Faz a quebra de aparecer 2 ao inves de 1 na pagina*/
+  breakpoints: {
+    767: {
+      slidesPerView: 2,
+      setWrapperSize: true
+    }
+  }
 })
 
 //ScrollReveal
 const scrollReveal = ScrollReveal({
   origin: 'top',
-  distance: '30px',
+  distance: '20px',
   duration: 1500,
   reset: true
 })
@@ -62,9 +68,8 @@ scrollReveal.reveal(
 )
 
 /*Button Back to top */
+const backToTopButton = document.querySelector('.back-to-top') //Pega o seletor do botão de subir
 function backToTop() {
-  const backToTopButton = document.querySelector('.back-to-top') //Pega o seletor do botão de subir
-
   if (this.window.scrollY >= 400) {
     backToTopButton.classList.add('show')
   } else {
@@ -72,8 +77,34 @@ function backToTop() {
   }
 }
 
+//Ativa o menu conforme a seção visivel na pagina
+const sections = document.querySelectorAll('main section[id]')
+function activateMenuAtCurrentSection() {
+  const checkpoint = window.pageYOffset + (window.innerHeight / 8) * 4
+
+  for (const section of sections) {
+    const sectionTop = section.offsetTop
+    const sectionHeight = section.offsetHeight
+    const sectionId = section.getAttribute('id')
+
+    const checkpointStart = checkpoint >= sectionTop
+    const checkpointEnd = checkpoint <= sectionTop + sectionHeight
+
+    if (checkpointStart && checkpointEnd) {
+      document
+        .querySelector('nav ul li a[href*=' + sectionId + ']')
+        .classList.add('active')
+    } else {
+      document
+        .querySelector('nav ul li a[href*=' + sectionId + ']')
+        .classList.remove('active')
+    }
+  }
+}
+
 /*Cria uma função para sempre que usar o Scroll da pagina já chamar a função acima*/
 window.addEventListener('scroll', function () {
   changeHeaderWhenScroll()
   backToTop()
+  activateMenuAtCurrentSection()
 })

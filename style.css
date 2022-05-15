@@ -30,6 +30,13 @@ ul{
   --text-color: hsl(0 0% 46%);
   --text-color-light: hsl(0 0% 98%);
   --body-color: hsl(0 0% 98%);
+
+  /*Fonts*/
+  --title-font-size: 1.875rem;
+  --subtitle-font-size: 1rem;
+
+  --title-font: 'Poppins', sans-serif;
+  --body-font: 'DM Sans', sans-serif;
 }
 
 /*============ BASE =============*/
@@ -38,14 +45,14 @@ html{
 }
 
 body {
-  font: 400 1rem 'DM Sans', sans-serif;
+  font: 400 1rem var(--body-font);
   color: var(--text-color);
   background: var(--body-color);
   -webkit-font-smoothing:antialiased; /*Deixa a fonte mais clara*/
 }
 
 .title {
-  font: 700 1.875rem 'Poppins', sans-serif;
+  font: 700 var(--title-font-size) var(--title-font);
   color: var(--title-color);
   -webkit-font-smoothing:auto;
 }
@@ -58,7 +65,7 @@ body {
   align-items: center;
   padding: 0 2rem;
   border-radius: 0.25rem;
-  font: 500 1rem 'DM Sans', sans-serif;
+  font: 500 1rem var(--body-font);
   transition: background 0.3s;
 }
 
@@ -78,12 +85,8 @@ body {
   hsla(var(--hue), 36%, 57%, 1));
 }
 
-main{
-  margin-top: calc(var(--header-height) + 2rem);/*Função de calcular 32px a mais no espaço*/
-}
-
 .logo{
-  font: 700 1.31rem 'Poppins', sans-serif;
+  font: 700 1.31rem var(--title-font);
   color: var(--title-color);
 }
 
@@ -101,16 +104,20 @@ main{
 }
 
 .grid {
-  display: grid;
+  display: grid; /*Usado o modo de Grid, conceito novo*/
   gap: 2rem;
 }
 
 .section {
-  padding: 5rem 0;
+  padding: calc(5rem + var(--header-height)) 0;
 }
 
 .section .title {
   margin-bottom: 1rem;
+}
+
+.section .subtitle {
+  font-size: var(--subtitle-font-size);
 }
 
 .section header {
@@ -159,11 +166,12 @@ nav ul li a {
   position: relative;
 }
 
-nav ul li a:hover {
+nav ul li a:hover,
+nav ul li a.active{
   color: var(--base-color);
 }
 
-nav ul li a::after {/*Cria o efeito do menu de crescer a linha de baixo ao passar o mouse*/
+nav ul li a::after{/*Cria o efeito do menu de crescer a linha de baixo ao passar o mouse*/
   content: '';
   width: 0%;
   height: 2px;
@@ -174,7 +182,8 @@ nav ul li a::after {/*Cria o efeito do menu de crescer a linha de baixo ao passa
   transition: width 0.2s;
 }
 
-nav ul li a:hover::after {
+nav ul li a:hover::after,
+nav ul li a.active::after {
   width: 100%;
 }
 
@@ -367,6 +376,10 @@ nav.show div.icon-close {
   margin-right: 0;
 }
 
+#testimonials header h2 {
+  margin-left: 2rem;
+}
+
 #testimonials blockquote{
   padding:  2rem;
   box-shadow:  0px 0px 12px rgba(0,0,0,0.09);
@@ -450,6 +463,10 @@ footer {
   background: var(--base-color);
 }
 
+footer.section{
+  padding: 4rem 0;
+}
+
 footer .logo {
   display: inline-block;/*Se for só display inline que vem por padrão, não dá para colocar margim, por isso a conversão*/
   margin-bottom: 1.5rem;
@@ -465,8 +482,13 @@ footer i {
   color: var(--text-color-light);
 }
 
+footer .social {
+  grid-auto-flow: column;
+  width: fit-content; /*Ajusta os icones do footer*/
+}
+
 footer .social a {
-  margin-right: 2rem;
+  /*margin-right: 2rem;*/
   transition: 0.3s;
   display: inline-block;/*Tem que usar o block para poder receber o TRANSLATE*/
 }
@@ -504,6 +526,128 @@ footer .social a:hover {
 /*Large devices: 992 > */
 /*Medium devices: 767 > */
 
+@media (min-width: 1200px) {
+  .container {
+    max-width: 1120px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  main {
+    margin-top: var(--header-height);/*Função de calcular 32px a mais no espaço*/
+  }
+
+  .section {
+    padding: 10rem 0;
+  }
+
+  .section header,
+  #testimonials header {
+    max-width: 32rem;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .button {
+    height: 3.125rem;
+  }
+
+  /* NAV */
+  nav .menu {
+    opacity: 1;
+    visibility: visible;
+    top: 0;
+  }
+
+  nav .menu ul {
+    display: flex;
+    gap: 2rem;
+  }
+
+  nav .menu ul li a.title {
+    font: 400 1rem var(--body-font);
+    -webkit-font-smoothing:antialiased;
+  }
+
+  nav .menu ul li a.title.active {
+    font-weight: bold;
+    -webkit-font-smoothing:auto;
+  }
+
+  nav .icon-menu {
+    display: none;
+  }
+
+  /* HOME */
+  #home .container {
+    grid-auto-flow: column;
+    /*width: fit-content;*/
+    justify-content: space-between;
+    margin: 0 auto;
+  }
+
+  #home .image {
+    order: 1;
+  }
+
+  #home .text {
+    order: 0;
+    max-width: 24rem;
+    text-align: left;
+  }
+
+  /* ABOUT */
+  #about .container {
+    margin: 0 auto;
+    grid-auto-flow: column;
+  }
+
+  /* SERVICES */
+  .cards {
+    grid-template-columns: 1fr 1fr 1fr;/*Faz a separacao em colunas dos Cards*/
+  }
+
+  .card {
+    padding-right: 3rem;
+    padding-right: 3rem;
+  }
+
+  /* TESTIMONIALS */
+  #testimonials .container {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  /* CONTACT*/
+  #contact .container {
+    grid-auto-flow: column;
+    align-items: center;
+  }
+
+  #contact .text {
+    max-width: 25rem;
+  }
+
+  /* FOOTER */
+  footer.section {
+    padding: 3.75rem 0;
+  }
+
+  footer .container {
+    grid-auto-flow: column;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  footer .logo {
+    font-size: 2.25rem;
+  }
+}
+
 @media (min-width: 992px) {
-  
+  :root {
+    --title-font-size: 2.25rem;
+    --subtitle-font-size: 1.125rem;
+  }
 }
